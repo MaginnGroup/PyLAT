@@ -67,8 +67,8 @@ Possible Properties:
   -c, --coord           Coordination Number. Will determine the first three minima of the RDF and calculates the coordination numbers integrating to those points.
   -m, --MSD             Mean Square Displacement.
   -d, --D               Diffusivity using MSD. Automatically includes MSD calculations.
-  --NEC                 Nernst Einstien Ionic Conductivity. Automatically includes MSD and diffusivity calculations.
-  --GKC                 Green Kubo Ionic Conductivity.
+  --NEC                 Nernst Einstein ionic conductivity. Automatically includes MSD and diffusivity calculations.
+  --GKC                 Green-Kubo ionic conductivity.
   --IPL                 Ion Pair Lifetime.
   --DEC                 Dielectric Constant
   --DS                  Search for molecules of given types at a given distance
@@ -82,7 +82,7 @@ System Properties:
 MSD Options:
   --MSD_skip MSD_SKIP   Number of timesteps to skip at the beginning of the trajectory file before calculating MSD. Default is 0
   --MSD_num_init MSD_NUM_INIT
-                        Number of initial timesteps to consider in MSD calculation. Defult is half of frames being used in MSD calculation
+                        Number of initial timesteps to consider in MSD calculation. Default is half of frames being used in MSD calculation
 
 RDF Options:
   --RDF_Timesteps RDF_TIMESTEPS
