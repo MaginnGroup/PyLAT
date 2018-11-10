@@ -2,7 +2,7 @@
 
 This is the github repository for the Python LAMMPS Analysis Tools. 
 
-Some of the properties utalize fortran for speedup. Before using this code, run the shell script compile.sh
+Some of the properties utilize fortran for speedup. Before using this code, run the shell script compile.sh
 
 The following information can be accessed by running the command "python PyLAT.py -h"
 
