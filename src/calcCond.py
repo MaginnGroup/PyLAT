@@ -59,7 +59,7 @@ class calcCond:
             time.append(i*tsjump*dt)
         cond = np.zeros(len(J))
         for i in range(0,len(J)):
-            ave = self.fitcurve(time, integral[i], begcon, len(integral[i]))    
+            ave = self.fitcurve(time, integral[i], begcon, endcon)    
             cond[i] = self.greenkubo(ave, T, V)
         GKintegral = self.greenkubo(integral,T,V)
         fit = []
