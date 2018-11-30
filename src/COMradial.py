@@ -13,7 +13,8 @@ __author__ = "mhumbert"
 
 class COMradialdistribution:
     def runradial(self, datfilename, comx, comy, comz, Lx, Ly, Lz, Lx2, Ly2,
-                  Lz2, output, nummoltype, moltypel, moltype, firststep, ver):
+                  Lz2, output, nummoltype, moltypel, moltype, timesteps, ver,
+                  maxr, binsize):
         
         """
         
@@ -21,9 +22,9 @@ class COMradialdistribution:
         center of mass for all species in the system
         
         """
-        (maxr, binsize, numbins, count, g) = self.setgparam(Lx2, Ly2, Lz2,
-                                                            firststep,
-                                                            moltypel)
+        (maxr, numbins, count, g,firststep) = self.setgparam(Lx2, Ly2, Lz2, timesteps,
+                                                            moltypel, maxr,
+                                                            binsize,len(comx))
         (count) = self.radialdistribution(g, len(comx[1]), moltype, comx,
                                               comy, comz, Lx, Ly, Lz, binsize,
                                               numbins, maxr, count)
@@ -33,20 +34,26 @@ class COMradialdistribution:
         self.append_dict(radiuslist, g, output, moltypel)
         return output
 
-    def setgparam(self, Lx2, Ly2, Lz2, firststep, moltypel):
+    def setgparam(self, Lx2, Ly2, Lz2, timesteps, moltypel, maxr, binsize,numsteps):
         # uses side lengths to set the maximum radius for box and number of bins
         # also sets the first line using data on firststep and number of atoms
-        maxr = min(Lx2, Ly2, Lz2)
-        binsize = 0.1
+        firststep = numsteps-timesteps
+        if maxr == None:
+            maxr = min(Lx2, Ly2, Lz2)
+        else:
+            maxr = float(maxr)
         numbins = int(np.ceil(maxr / binsize))
         count = firststep
         g = np.zeros((len(moltypel), len(moltypel), numbins))
-        return maxr, binsize, numbins, count, g
+        return maxr, numbins, count, g, firststep
 
     def radialdistribution(self, g, nummol, moltype, comx, comy, comz, Lx, Ly,
                            Lz, binsize, numbins, maxr, count):
         # calculates the number of molecules within each shell
         comxt = np.array(comx[count:]).transpose()
+        print(comx)
+        print(count)
+        print(comxt)
         comyt = np.array(comy[count:]).transpose()
         comzt = np.array(comz[count:]).transpose()
         indexlist = []
