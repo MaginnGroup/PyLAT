@@ -62,7 +62,7 @@ if __name__ == '__main__':
     Example: For diffusivity and RDF of a system with 500 water and 500 
         methanol in the directory methanol/inwater
     
-    python lammpsanalysis.py -d -g --mol H2O --mol CH3OH --nummol 500 
+    python PyLAT.py -d -g --mol H2O --mol CH3OH --nummol 500 
         --nummol 500 -p methanol/inwater/ -f methanolwater.json -v 2 mol.log 
         restart.dat mol1.lammpstrj mol2.lammpstrj
     ''')
@@ -105,11 +105,14 @@ if __name__ == '__main__':
     MSDoptions.add_argument('--MSD_num_init', help = 'Number of initial timesteps to consider in MSD calculation. Defult is half of frames being used in MSD calculation', default = None)    
     
     RDFoptions = parser.add_argument_group('RDF Options')
-    RDFoptions.add_argument('--RDF_Timesteps', help = 'Number of timesteps to use in the RDF calculation. \nWill use the last n timesteps. \nDefault is to calculate based on the number of molecules in the system. \nDefault is not recommended for systems with a molecule type with few molecules.', type = int)    
+    RDFoptions.add_argument('--RDF_Timesteps', help = 'Number of timesteps to use in the RDF calculation. \nWill use the last n timesteps. \nDefault is to use all timesteps', type = int)    
+    RDFoptions.add_argument('--RDF_maxr', help = 'Maximum r for RDF calculation. Default is half the shortest box length.', default = None)
+    RDFoptions.add_argument('--RDF_binsize', help = 'Bin size for RDF calculation. Default is 0.1', default = 0.1, type = float)
+    
     
     GKCoptions = parser.add_argument_group('GK Conductivity options')
     GKCoptions.add_argument('--GKC_skip', help = 'Number of timesteps to skip at the beginning of the trajectory file before calculating GK Conductivity. Default is 0', default = 0, type=int)    
-    GKCoptions.add_argument('--GKC_Tolerance', help= 'Tolerance for finding the converged region for GK conductivity calculation. Default is 0.0035', default = 0.0035, type=float)
+    GKCoptions.add_argument('--GKC_Tolerance', help= 'Tolerance for finding the converged region for GK conductivity calculation. Default is 0.001', default = 0.001, type=float)
     GKCoptions.add_argument('--GKC_J_Output', help='Option to output the charge flux correlation function. If included, a file J.dat will be created with the values of the correlation function.', action='store_true')
     
     IPLoptions = parser.add_argument_group('Ion Pair Lifetime options')
@@ -131,6 +134,9 @@ if __name__ == '__main__':
                              default = None)
     Viscoptions.add_argument('--Visc_Num', help = 'Number of Trajectories to use in the viscosity calculation. Each trajectory should have a seperate trajectory',type=int)
     Viscoptions.add_argument('--Visc_Skip', help = 'Number of timesteps to skip in the viscosity calculation. Default of 0 should only be used if the simulations were equilibrated before the start of the production run', default=0, type=int)
+    Viscoptions.add_argument('--Visc_Num_Boots', help = 'Number of times to sample trajectories for bootstrapping. Default is 100', default = 100, type = int)
+    Viscoptions.add_argument('--Visc_Samples', help = 'Number of samples for each bootstrapping iteration. Default is 30', default = 30, type = int)
+    Viscoptions.add_argument('--Visc_Plot', help = 'Include plotting for viscosity fitting. Matplotlib required for fitting. Will output to x11', action = 'store_true')
     
     arg = parser.parse_args()
     
@@ -225,13 +231,12 @@ if __name__ == '__main__':
         
     if arg.RDF:
         if arg.RDF_Timesteps == None:
-            arg.RDF_Timesteps = min(int(62500000/(min(nummoltype)**2)),len(comx)-1)
-            print('Number of Timesteps for RDF Calculation not given. Will use {0} Timesteps.'.format(arg.RDF_Timesteps))
+            arg.RDF_Timesteps = len(comx)
         if arg.verbose >= 1:    
             print('beginning RDF calculation')
         output['RDF'] = {}
         output['RDF']['units'] = 'unitless, angstroms'
-        output = crd.runradial(datfilename, comx, comy, comz, Lx, Ly, Lz, Lx2, Ly2, Lz2, output, nummoltype, moltypel, moltype, arg.RDF_Timesteps, ver)
+        output = crd.runradial(datfilename, comx, comy, comz, Lx, Ly, Lz, Lx2, Ly2, Lz2, output, nummoltype, moltypel, moltype, arg.RDF_Timesteps, ver,arg.RDF_maxr,arg.RDF_binsize)
         if arg.verbose >= 1:
             print('RDF calculation complete')
     
@@ -290,8 +295,8 @@ if __name__ == '__main__':
     if arg.Visc:
         if arg.verbose >= 1:    
             print('beginning viscosity calculation')
-        output = cv.calcvisc(arg.Visc_Num,arg.Visc_Skip,arg.Visc_Dir,arg.LOG[0],output, ver)
-        output = fv.fitvisc(output)
+        output = cv.calcvisc(arg.Visc_Num,arg.Visc_Skip,arg.Visc_Dir,arg.LOG[0],output, arg.verbose, arg.Visc_Samples, arg.Visc_Num_Boots, arg.Visc_Plot)
+        #output = fv.fitvisc(output)
         if arg.verbose >= 1:
             print('viscosity calculation complete')
 
