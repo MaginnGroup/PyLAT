@@ -85,9 +85,9 @@ if __name__ == '__main__':
                         help = 'Diffusivity using MSD. Automatically includes MSD calculations.', 
                         action = 'store_true')
     properties.add_argument('--NEC', 
-                        help = 'Nernst Einstien Ionic Conductivity. Automatically includes MSD and diffusivity calculations.', 
+                        help = 'Nernst Einstein ionic conductivity. Automatically includes MSD and diffusivity calculations.', 
                         action = 'store_true')
-    properties.add_argument('--GKC', help = 'Green Kubo Ionic Conductivity.', action = 'store_true')
+    properties.add_argument('--GKC', help = 'Green-Kubo ionic conductivity.', action = 'store_true')
     properties.add_argument('--IPL', help = 'Ion Pair Lifetime.', action = 'store_true')
     properties.add_argument('--DEC', help = 'Dielectric Constant', action = 'store_true')    
     properties.add_argument('--DS', help = 'Search for molecules of given types at a given distance', action = 'store_true')
@@ -102,7 +102,7 @@ if __name__ == '__main__':
     
     MSDoptions = parser.add_argument_group('MSD Options')
     MSDoptions.add_argument('--MSD_skip', help = 'Number of timesteps to skip at the beginning of the trajectory file before calculating MSD. Default is 0', default = 0, type=int)
-    MSDoptions.add_argument('--MSD_num_init', help = 'Number of initial timesteps to consider in MSD calculation. Defult is half of frames being used in MSD calculation', default = None)    
+    MSDoptions.add_argument('--MSD_num_init', help = 'Number of initial timesteps to consider in MSD calculation. Default is half of frames being used in MSD calculation', default = None)    
     
     RDFoptions = parser.add_argument_group('RDF Options')
     RDFoptions.add_argument('--RDF_Timesteps', help = 'Number of timesteps to use in the RDF calculation. \nWill use the last n timesteps. \nDefault is to use all timesteps', type = int)    
