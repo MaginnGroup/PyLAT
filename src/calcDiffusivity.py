@@ -26,6 +26,7 @@ class calcdiffusivity:
             time = output['MSD']['time']
             lntime = np.log(time[1:])
             firststep = self.findlinearregion(lnMSD, lntime, dt)
+            #self.writeLogLog(lnMSD,lntime,moltypel[i])
             diffusivity = self.getdiffusivity(time, MSD, firststep)
             output['Diffusivity'][moltypel[i]] = diffusivity
             
@@ -71,4 +72,10 @@ class calcdiffusivity:
             slope = line[0]
             diffusivity=slope/600000
         return diffusivity
+    
+    def writeLogLog(self,lnMSD,lntime,moltype):
+        outfile = open('LogLog{}.dat'.format(moltype),'w')
+        for i in range(0,len(lnMSD)):
+            outfile.write('{}\t{}\n'.format(lntime[i],lnMSD[i]))
+        outfile.close()
             

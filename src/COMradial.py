@@ -51,9 +51,6 @@ class COMradialdistribution:
                            Lz, binsize, numbins, maxr, count):
         # calculates the number of molecules within each shell
         comxt = np.array(comx[count:]).transpose()
-        print(comx)
-        print(count)
-        print(comxt)
         comyt = np.array(comy[count:]).transpose()
         comzt = np.array(comz[count:]).transpose()
         indexlist = []

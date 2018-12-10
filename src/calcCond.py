@@ -322,7 +322,7 @@ class calcCond:
         for i in range(0,len(J[0])):
             outfile.write('{}\t{}'.format(tsjump*dt*i,J[0][i]))
             for k in range(1,len(J)):
-                outfile.write('\t{}'.formate(J[k][i]))
+                outfile.write('\t{}'.format(J[k][i]))
             outfile.write('\n')
     
     def correlate(self,a,b):

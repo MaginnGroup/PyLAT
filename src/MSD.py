@@ -23,8 +23,8 @@ class MSD:
         """
         
         (comx, comy, comz) = self.unwrap(comx,comy,comz,Lx,Ly,Lz,Lx2,Ly2,Lz2)
-        if ver:        
-            print 'unwrap complete'
+        if ver > 0:        
+            print('unwrap complete')
         num_timesteps = len(comx)
         (num_init, len_MSD, MSD, diffusivity) = self.gettimesteps(num_timesteps, moltypel,skip, num_init)
         (molcheck,nummol) = self.setmolarray(moltype,moltypel)
