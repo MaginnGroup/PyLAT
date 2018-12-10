@@ -8,10 +8,12 @@ Created on Fri Dec 11 09:16:20 2015
 from viscio import LammpsLog
 import numpy as np
 import sys
+from random import randint
+from fitVisc import fitVisc
 
 class calcVisc:
     
-    def calcvisc(self,numtrj,numskip,dirbase,logname,output,ver):
+    def calcvisc(self,numtrj,numskip,dirbase,logname,output,ver,numsamples,numboot,plot):
         '''
         
         Calculates average and standard deviation of the integral of the 
@@ -46,15 +48,56 @@ class calcVisc:
         if ver>=1:
             sys.stdout.write('\n')
         
+        #Begin Bootstrapping for error estimate
+        Values = []
+        fv = fitVisc()
+        for i in range(0,numboot):
+            Values.append(self.Bootstrap(numsamples,trjlen,numtrj,viscosity,Time,fv,plot))
+            if ver > 1:
+                sys.stdout.write('\rViscosity Bootstrap {} of {} complete'.format(i+1,numboot))
+        if ver > 1:
+            sys.stdout.write('\n')
         
-        average = np.zeros(trjlen)
-        stddev = np.zeros(trjlen)
-        for i in range(0,trjlen):
-            average[i] = np.average(viscosity.transpose()[i])
-            stddev[i] = np.std(viscosity.transpose()[i])
+        (ave,stddev,Values) = self.getAverage(Values,numsamples,trjlen,numtrj,viscosity,Time,fv)
         
-        output['Viscosity']['Average Integral']=average.tolist()
-        output['Viscosity']['Standard Deviation']=stddev.tolist()
-        output['Viscosity']['Time']=Time[:trjlen].tolist()
+        output['Viscosity']['Average Value'] = ave
+        output['Viscosity']['Standard Deviation'] = stddev
+        #output['Viscosity']['Average Integral']=average.tolist()
+        #output['Viscosity']['Standard Deviation']=stddev.tolist()
+        #output['Viscosity']['Time']=Time[:trjlen].tolist()
         
         return(output)
+    
+    def getAverage(self, Values,numsamples,trjlen,numtrj,viscosity,Time,fv):
+        #calculate average and standard deviation of Values array
+        #Was originally implemented to perform a z-test on the values to determine outliers
+        ave = np.average(Values)
+        stddev = np.std(Values)
+        #maxval = np.max(Values)
+        #minval = np.min(Values)
+        #if ((maxval-ave)>(3*stddev)):
+            #Values.remove(maxval)
+            #print('{} removed from values'.format(maxval))
+            #Values.append(self.Bootstrap(numsamples,trjlen,numtrj,viscosity,Time,fv))
+            #(ave, stddev,Values) = self.getAverage(Values,numsamples,trjlen,numtrj,viscosity,Time,fv)
+        #elif ((ave-minval)>(5*stddev)):
+            #Values.remove(minval)
+            #print('{} removed from values'.format(minval))
+            #Values.append(self.Bootstrap(numsamples,trjlen,numtrj,viscosity,Time,fv))
+            #(ave, stddev,Values) = self.getAverage(Values,numsamples,trjlen,numtrj,viscosity,Time,fv)
+        return (ave,stddev,Values)
+            
+    def Bootstrap(self,numsamples,trjlen,numtrj,viscosity,Time,fv,plot):
+        #Perform calculate the viscosity of one bootstrapping sample
+        Bootlist = np.zeros((numsamples,trjlen))
+        for j in range(0,numsamples):
+            rint=randint(0,numtrj-1)
+            for k in range(0,trjlen):
+                Bootlist[j][k] = viscosity[rint][k]
+        average = np.zeros(trjlen)
+        stddev = np.zeros(trjlen)
+        for j in range(0,trjlen):
+            average[j] = np.average(Bootlist.transpose()[j])
+            stddev[j] = np.std(Bootlist.transpose()[j])
+        Value = fv.fitvisc(Time,average,stddev,plot)
+        return Value
