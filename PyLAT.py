@@ -215,7 +215,7 @@ if __name__ == '__main__':
     if arg.MSD or arg.D or arg.IPL:
         tsjump = gt.getjump(trjfilename[0])
         dt = gt.getdt(logfilename)
-    if arg.NEC or arg.GKC or arg.GKC:
+    if arg.NEC or arg.GKC or arg.GKC or arg.DEC:
         n = gc.findnumatoms(datfilename)
         (molcharges, atomcharges,n) = gc.getmolcharges(datfilename,n)
         molcharge = gc.molchargedict(molcharges, moltypel, moltype)
