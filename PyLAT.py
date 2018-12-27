@@ -232,6 +232,9 @@ if __name__ == '__main__':
     if arg.RDF:
         if arg.RDF_Timesteps == None:
             arg.RDF_Timesteps = len(comx)
+        if arg.RDF_Timesteps > len(comx):
+            print('Number of RDF timesteps requested longer than simulation. Using all timesteps.')
+            arg.RDF_Timesteps = len(comx)
         if arg.verbose >= 1:    
             print('beginning RDF calculation')
         output['RDF'] = {}
