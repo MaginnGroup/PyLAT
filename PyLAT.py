@@ -104,6 +104,9 @@ if __name__ == '__main__':
     MSDoptions.add_argument('--MSD_skip', help = 'Number of timesteps to skip at the beginning of the trajectory file before calculating MSD. Default is 0', default = 0, type=int)
     MSDoptions.add_argument('--MSD_num_init', help = 'Number of initial timesteps to consider in MSD calculation. Default is half of frames being used in MSD calculation', default = None)    
     
+    Difoptions = parser.add_argument_group('Diffusivity Options')
+    Difoptions.add_argument('--D_Tolerance', help = 'Tolerance for determining linear region in Log-Log plot. Default is 0.075', type=float, default=0.075)
+    
     RDFoptions = parser.add_argument_group('RDF Options')
     RDFoptions.add_argument('--RDF_Timesteps', help = 'Number of timesteps to use in the RDF calculation. \nWill use the last n timesteps. \nDefault is to use all timesteps', type = int)    
     RDFoptions.add_argument('--RDF_maxr', help = 'Maximum r for RDF calculation. Default is half the shortest box length.', default = None)

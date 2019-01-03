@@ -11,7 +11,7 @@ import warnings
 class calcdiffusivity:
         
     
-    def calcdiffusivity(self, output, moltypel, dt):
+    def calcdiffusivity(self, output, moltypel, dt, tol):
         
         """
         This function fits the mean square displacement to calculate the
@@ -32,13 +32,12 @@ class calcdiffusivity:
             
     
     
-    def findlinearregion(self, lnMSD, lntime, dt):
+    def findlinearregion(self, lnMSD, lntime, dt, tol):
         #Uses the slope of the log-log plot to find linear regoin of MSD
         timestepskip=int(500/dt)
         linearregion=True
         maxtime = len(lnMSD)
         numskip=1
-        tolerance=0.075
         while linearregion == True:
             if numskip*timestepskip+1 > maxtime:
                 firststep = maxtime-1-(numskip-1)*timestepskip
@@ -48,7 +47,7 @@ class calcdiffusivity:
                 t1=maxtime-1-(numskip-1)*timestepskip
                 t2=maxtime-1-numskip*timestepskip
                 slope = (lnMSD[t1]-lnMSD[t2])/(lntime[t1]-lntime[t2])
-                if abs(slope-1.) < tolerance:
+                if abs(slope-1.) < tol:
                     numskip += 1
                 else:
                     firststep=t1
