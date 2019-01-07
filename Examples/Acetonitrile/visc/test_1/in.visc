@@ -1,0 +1,50 @@
+#
+variable        NAME index visc
+log             ${NAME}.log
+variable        infile index mol.data
+variable        mytemp index 323
+
+# set up simulation
+# the following information is saved to restart files
+units           real
+atom_style      full
+boundary        p p p
+pair_style      lj/cut/coul/long 12
+kspace_style    pppm 0.0001
+pair_modify     tail yes
+pair_modify     mix arithmetic
+special_bonds   amber
+
+bond_style      harmonic
+angle_style     harmonic
+dihedral_style  charmm
+improper_style  cvff  
+
+read_data       ${infile}
+
+neighbor        2.0 bin
+neigh_modify    delay 0 every 1 check yes page 1000000 one 20000 
+timestep        1.0
+
+## end information that is saved to restart files
+
+## create velocity profile
+velocity        all create  ${mytemp} 884079717 units box 
+velocity        all zero linear units box
+#dump            DUMP all custom 50 ${NAME}.lammpstrj id type x y z vx vy vz mol
+thermo_style    custom step cpu cpuremain vol temp press density pxx pxy pxz pyy pyz pzz
+thermo          10
+#
+## thermostat and integrator
+#minimize       1e-4 1e-6 10000 10000
+
+#fix             shake all shake 0.0001 20 0 b 1 a 1 
+#fix             NPT all npt temp ${mytemp} ${mytemp} 100.0 iso 1.0 1.0 100.0
+fix             NVT all nvt temp ${mytemp} ${mytemp} 100.0 
+
+restart         50000 restart.${NAME}.1 restart.${NAME}.2
+run             5000000
+
+
+write_restart   restart.${NAME}
+write_data      restart.data

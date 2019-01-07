@@ -1,0 +1,45 @@
+# Tosi Fumi NaCl
+variable thisTemp equal 1300
+variable anealSteps equal 3000000
+variable relaxSteps equal 5000000
+variable newAnealSteps equal 1000000
+variable newRelaxSteps equal 1000000
+variable runSteps equal 5000000
+variable thermoSteps equal 10000
+
+units real
+atom_style full
+dimension 3
+boundary p p p
+
+pair_style born/coul/long 15
+
+neighbor 3.0 bin
+neigh_modify every 2 delay 0 check yes one 3000
+kspace_style ewald 1.0e-4
+
+#Atom defination part
+#read_data NaCl.${thisTemp}.data
+read_data mol.data
+group na type 1
+group cl type 2
+group all union na cl
+region box block INF INF INF INF INF INF
+
+#minimize 1.0e-12 1.0e-8 100 1000
+#velocity all create 3000 131415926 dist gaussian
+#fix 1 all nvt temp 3000 ${thisTemp} 100
+thermo ${thermoSteps}
+thermo_style custom step cpu cpuremain temp pe density
+timestep 1
+#run ${anealSteps}
+
+#unfix 1
+fix 2 all nvt temp ${thisTemp} ${thisTemp} 100
+#run ${relaxSteps}
+
+#dump 1 na custom 100 naxyz.$i.txt id xu yu zu
+#dump 2 cl custom 100 clxyz.$i.txt id xu yu zu
+dump 1 all custom 100 mol.lammpstrj id mol type x y z vx vy vz
+run ${runSteps}
+write_data restart.data
