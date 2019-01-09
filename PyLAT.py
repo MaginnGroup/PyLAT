@@ -5,6 +5,22 @@ Created on Wed May 20 13:37:57 2015
 @author: mhumbert
 
 
+PyLAT: Python LAMMPS Analysis Tools
+Copyright (C) 2018  Michael Humbert, Yong Zhang and Ed Maginn
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 This is the driver file for the PyLAT program. This file parsers the user 
 input, and then calls the proper class files
 """
@@ -287,7 +303,7 @@ if __name__ == '__main__':
     if arg.D:
         if arg.verbose >= 1:    
             print('beginning diffusivity calculation')
-        cd.calcdiffusivity(output, moltypel, dt)
+        cd.calcdiffusivity(output, moltypel, dt,arg.D_Tolerance)
         if arg.verbose:
             print('diffusivity calculation complete')
         

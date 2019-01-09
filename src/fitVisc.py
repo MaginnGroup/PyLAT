@@ -3,6 +3,23 @@
 Created on Wed May 18 16:05:34 2016
 
 @author: mhumbert
+
+PyLAT: Python LAMMPS Analysis Tools
+Copyright (C) 2018  Michael Humbert, Yong Zhang and Ed Maginn
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 """
 
 import numpy as np
@@ -56,6 +73,7 @@ class fitVisc:
         #Value = popt2[0]
         
         if plot:
+            timep = time/1000000
             from matplotlib import pyplot as plt
             from matplotlib import rcParams
             rcParams.update({'font.size':14})
@@ -63,13 +81,13 @@ class fitVisc:
             print('A={}, alpha={}, tau1={}, tau2={}'.format(popt2[0],popt2[1],popt2[2],popt2[3]))
             print('Time cutoff is {}'.format(time[cut]))
             plt.ticklabel_format(axis='x', style='sci', scilimits=(0,0))
-            plt.plot(time[:len(visc)],visc,label='Viscosity')
-            plt.plot(time[:len(fit)],fit,label='Double Exponential fit')
-            plt.plot(time[:len(fit1)],fit1,label='Contribution of tau1')
-            plt.plot(time[:len(fit2)],fit2,label='Contribution of tau2')
-            plt.axvline(time[cut])
-            plt.ylabel('Viscosity(cP)')
-            plt.xlabel('Time (fs)')
+            plt.plot(timep[:len(visc)],visc,label='Viscosity')
+            plt.plot(timep[:len(fit)],fit,label='Double Exponential fit')
+            plt.plot(timep[:len(fit1)],fit1,label=r'Contribution of $\tau_1$')
+            plt.plot(timep[:len(fit2)],fit2,label=r'Contribution of $\tau_2$')
+            plt.axvline(timep[cut])
+            plt.ylabel('Viscosity (mPa*s)')
+            plt.xlabel('Time (ns)')
             plt.legend()
             plt.show()
         

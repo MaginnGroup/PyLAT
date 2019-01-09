@@ -3,6 +3,22 @@
 Created on Wed May 27 16:05:33 2015
 
 @author: mhumbert
+PyLAT: Python LAMMPS Analysis Tools
+Copyright (C) 2018  Michael Humbert, Yong Zhang and Ed Maginn
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 """
 import numpy as np
 from scipy import stats
@@ -34,7 +50,7 @@ class calcdiffusivity:
     
     def findlinearregion(self, lnMSD, lntime, dt, tol):
         #Uses the slope of the log-log plot to find linear regoin of MSD
-        timestepskip=int(500/dt)
+        timestepskip=np.ceil(500/dt)
         linearregion=True
         maxtime = len(lnMSD)
         numskip=1
