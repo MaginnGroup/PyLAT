@@ -33,7 +33,7 @@ velocity        all create  ${mytemp} 884079717 units box
 velocity        all zero linear units box
 #dump            DUMP all custom 50 ${NAME}.lammpstrj id type x y z vx vy vz mol
 thermo_style    custom step cpu cpuremain vol temp press density pxx pxy pxz pyy pyz pzz
-thermo          10
+thermo          5
 #
 ## thermostat and integrator
 #minimize       1e-4 1e-6 10000 10000
