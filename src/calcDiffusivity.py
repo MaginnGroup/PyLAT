@@ -41,7 +41,7 @@ class calcdiffusivity:
             lnMSD = np.log(MSD[1:])
             time = output['MSD']['time']
             lntime = np.log(time[1:])
-            firststep = self.findlinearregion(lnMSD, lntime, dt)
+            firststep = self.findlinearregion(lnMSD, lntime, dt, tol)
             #self.writeLogLog(lnMSD,lntime,moltypel[i])
             diffusivity = self.getdiffusivity(time, MSD, firststep)
             output['Diffusivity'][moltypel[i]] = diffusivity
