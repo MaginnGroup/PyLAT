@@ -60,8 +60,8 @@ class calcdiffusivity:
                 return firststep
                 linearregion= False
             else:
-                t1=maxtime-1-(numskip-1)*timestepskip
-                t2=maxtime-1-numskip*timestepskip
+                t1=int(maxtime-1-(numskip-1)*timestepskip)
+                t2=int(maxtime-1-numskip*timestepskip)
                 slope = (lnMSD[t1]-lnMSD[t2])/(lntime[t1]-lntime[t2])
                 if abs(slope-1.) < tol:
                     numskip += 1
@@ -75,7 +75,7 @@ class calcdiffusivity:
         #Fits the linear region of the MSD to obtain the diffusivity
         calctime = []        
         calcMSD = []
-        for i in range(firststep, len(Time)):
+        for i in range(int(firststep), len(Time)):
             calctime.append(Time[i])
             calcMSD.append(MSD[i])
         if len(calctime)==1:

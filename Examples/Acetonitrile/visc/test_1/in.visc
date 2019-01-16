@@ -43,7 +43,7 @@ thermo          5
 fix             NVT all nvt temp ${mytemp} ${mytemp} 100.0 
 
 restart         50000 restart.${NAME}.1 restart.${NAME}.2
-run             5000000
+run             10000000
 
 
 write_restart   restart.${NAME}
