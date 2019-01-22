@@ -29,7 +29,7 @@ from fitVisc import fitVisc
 
 class calcVisc:
     
-    def calcvisc(self,numtrj,numskip,dirbase,logname,output,ver,numsamples,numboot,plot):
+    def calcvisc(self,numtrj,numskip,dirbase,logname,output,ver,numsamples,numboot,plot, popt2):
         '''
         
         Calculates average and standard deviation of the integral of the 
@@ -68,7 +68,7 @@ class calcVisc:
         Values = []
         fv = fitVisc()
         for i in range(0,numboot):
-            Values.append(self.Bootstrap(numsamples,trjlen,numtrj,viscosity,Time,fv,plot))
+            Values.append(self.Bootstrap(numsamples,trjlen,numtrj,viscosity,Time,fv,plot, popt2))
             if ver > 1:
                 sys.stdout.write('\rViscosity Bootstrap {} of {} complete'.format(i+1,numboot))
         if ver > 1:
@@ -103,7 +103,7 @@ class calcVisc:
             #(ave, stddev,Values) = self.getAverage(Values,numsamples,trjlen,numtrj,viscosity,Time,fv)
         return (ave,stddev,Values)
             
-    def Bootstrap(self,numsamples,trjlen,numtrj,viscosity,Time,fv,plot):
+    def Bootstrap(self,numsamples,trjlen,numtrj,viscosity,Time,fv,plot,popt2):
         #Perform calculate the viscosity of one bootstrapping sample
         Bootlist = np.zeros((numsamples,trjlen))
         for j in range(0,numsamples):
@@ -115,5 +115,5 @@ class calcVisc:
         for j in range(0,trjlen):
             average[j] = np.average(Bootlist.transpose()[j])
             stddev[j] = np.std(Bootlist.transpose()[j])
-        Value = fv.fitvisc(Time,average,stddev,plot)
+        Value = fv.fitvisc(Time,average,stddev,plot,popt2)
         return Value

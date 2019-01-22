@@ -153,9 +153,10 @@ if __name__ == '__main__':
                              default = None)
     Viscoptions.add_argument('--Visc_Num', help = 'Number of Trajectories to use in the viscosity calculation. Each trajectory should have a seperate trajectory',type=int)
     Viscoptions.add_argument('--Visc_Skip', help = 'Number of timesteps to skip in the viscosity calculation. Default of 0 should only be used if the simulations were equilibrated before the start of the production run', default=0, type=int)
-    Viscoptions.add_argument('--Visc_Num_Boots', help = 'Number of times to sample trajectories for bootstrapping. Default is 100', default = 100, type = int)
+    Viscoptions.add_argument('--Visc_Num_Boots', help = 'Number of times to sample trajectories for bootstrapping. Default is 10', default = 10, type = int)
     Viscoptions.add_argument('--Visc_Samples', help = 'Number of samples for each bootstrapping iteration. Default is 30', default = 30, type = int)
     Viscoptions.add_argument('--Visc_Plot', help = 'Include plotting for viscosity fitting. Matplotlib required for fitting. Will output to x11', action = 'store_true')
+    Viscoptions.add_argument('--Visc_Guess', help = 'Initial guess for viscosity fitting parameters. Must add all four parameters with one call. Order of parameters is A, alpha, tau1, tau2. Default is the equivalent of calling "--Visc_Guess 1e-3 1.5e-1 1e2 1e3".', type = float, nargs = 4)
     
     arg = parser.parse_args()
     
@@ -317,7 +318,11 @@ if __name__ == '__main__':
     if arg.Visc:
         if arg.verbose >= 1:    
             print('beginning viscosity calculation')
-        output = cv.calcvisc(arg.Visc_Num,arg.Visc_Skip,arg.Visc_Dir,arg.LOG[0],output, arg.verbose, arg.Visc_Samples, arg.Visc_Num_Boots, arg.Visc_Plot)
+        if arg.Visc_Guess == None:
+            arg.Visc_Guess = [1e-3,1.5e-1,1e2,1e3]
+        if len(arg.Visc_Guess) != 4:
+            print('need four inputs for viscosity initial parameters.')
+        output = cv.calcvisc(arg.Visc_Num,arg.Visc_Skip,arg.Visc_Dir,arg.LOG[0],output, arg.verbose, arg.Visc_Samples, arg.Visc_Num_Boots, arg.Visc_Plot, arg.Visc_Guess)
         #output = fv.fitvisc(output)
         if arg.verbose >= 1:
             print('viscosity calculation complete')

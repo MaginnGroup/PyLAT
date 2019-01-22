@@ -40,8 +40,8 @@ class fitVisc:
     def singleexp(self, x, A, tau):
         return A*(1-np.exp(-x/tau))
     
-    def fitvisc(self,time,visc,stddev,plot):
-        popt2=[1e-3,1.5e-1,3e4,1e3]
+    def fitvisc(self,time,visc,stddev,plot, popt2):
+        #popt2=[1e-3,1.5e-1,1e2,1e3]
         #popt2=[2e-3,5e-2,2e3,2e2]
         #popt2=[1e-4,1e2]
         foundcutoff = False
@@ -59,8 +59,8 @@ class fitVisc:
             else:
                 cut += 1
         #cut = len(visc)
-        #popt2,pcov2 = optimize.curve_fit(self.doubexp, time[start:cut], visc[start:cut],maxfev=1000000,p0=popt2, sigma=stddev[start:cut])
-        popt2,pcov2 = optimize.curve_fit(self.doubexp, time[start:cut], visc[start:cut],maxfev=1000000,p0=popt2, sigma=stddev[start:cut],bounds=(0,[np.inf,1,np.inf,np.inf]))
+        popt2,pcov2 = optimize.curve_fit(self.doubexp, time[start:cut], visc[start:cut],maxfev=1000000,p0=popt2, sigma=stddev[start:cut])
+        #popt2,pcov2 = optimize.curve_fit(self.doubexp, time[start:cut], visc[start:cut],maxfev=1000000,p0=popt2, sigma=stddev[start:cut],bounds=(0,[np.inf,1,np.inf,np.inf]))
         
         fit = []
         fit1 = []
