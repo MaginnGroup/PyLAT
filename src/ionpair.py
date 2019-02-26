@@ -52,14 +52,14 @@ class ionpair:
             r = self.calcdistance(comx[step],comy[step],comz[step],Lx,Ly,Lz)
             self.findclosest(r,closest,begin,end,step)
             if ver:
-                sys.stdout.write('\rIPL distance calculation {0}% complete'.format((step+1)*100/len(comx)))
+                sys.stdout.write('\rIPL distance calculation {:.2f}% complete'.format((step+1)*100.0/len(comx)))
         
         if ver:
             sys.stdout.write('\n')
         
         correlation = self.correlation(closest,moltype,moltypel,ver,skipframes)
         if ver:
-            print 'correlation complete'
+            print('correlation complete')
         time = []
         for i in range(0,len(correlation)):
             time.append(float(i*tsjump*dt/1000))

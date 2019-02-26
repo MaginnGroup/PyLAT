@@ -60,7 +60,7 @@ class calcCond:
                 (comvx, comvy, comvz) = self.calcCOMv(comvx, comvy, comvz, vx, vy, vz, mol, atype, atommass, molmass, n, nummol)
                 (jx, jy, jz, count) = self.calcj(dotlist, comvx, comvy, comvz, jx, jy, jz, count)
                 if ver == 2:
-                    sys.stdout.write('\rCOM velocity calculation {0}% complete'.format(count*100/num_timesteps))
+                    sys.stdout.write('\rCOM velocity calculation {:.2f}% complete'.format(count*100.0/num_timesteps))
         if ver == 2:
             sys.stdout.write('\n')
         if ver >= 2:

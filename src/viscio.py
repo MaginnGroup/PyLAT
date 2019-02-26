@@ -129,7 +129,7 @@ class LammpsLog():
         """
         print the list of properties
         """
-        print log.llog.keys()
+        print(log.llog.keys())
 
 
     # viscosity

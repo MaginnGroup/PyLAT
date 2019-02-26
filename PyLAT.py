@@ -271,7 +271,7 @@ if __name__ == '__main__':
             print('coordination number calculation complete')
              
     if arg.DEC:
-        dec.calcDEC(atomcharges, trjfilename, arg.temp, output, V, arg.verbose, arg.DEC_start)
+        output = dec.calcDEC(atomcharges, trjfilename, arg.temp, output, V, arg.verbose, arg.DEC_start)
              
     if arg.GKC:
         if arg.verbose >= 1:    

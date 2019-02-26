@@ -241,7 +241,7 @@ class distSearch:
                             numFound += 1
                             molid[i].sort()
                             molid[indid[j]].sort()
-                            print 'Sample {} Found'.format(numFound)
+                            print('Sample {} Found'.format(numFound))
                             output['Distance_Search']['Sample_{}'.format(numFound)] = {}
                             output['Distance_Search']['Sample_{}'.format(numFound)]['Distance'] = float(r[j])
                             output['Distance_Search']['Sample_{}'.format(numFound)]['Frame'] = int(frame)

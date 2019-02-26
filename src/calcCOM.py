@@ -54,7 +54,7 @@ class calcCOM:
                     (nummol, comx, comy, comz, molmass) = self.comprep(mol, n, atype, atommass, num_timesteps)
                 (comx, comy, comz, count) = self.calccom(comx, comy, comz, x, y, z, mol, atype, atommass, molmass, Lx, Ly, Lz, Lx2, Ly2, Lz2, n, count, nummol)
                 if ver:                
-                    sys.stdout.write('\rCOM calculation {0}% complete'.format(count*100/num_timesteps))
+                    sys.stdout.write('\rCOM calculation {:.2f}% complete'.format(count*100.0/num_timesteps))
             trjfile.close()
         if ver:
             sys.stdout.write('\n')

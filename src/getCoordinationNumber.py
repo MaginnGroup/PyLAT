@@ -40,7 +40,7 @@ class getcoordinationnumber:
         output['Coordination_Number'] = {}
         output['Coordination_Number']['units'] = 'Minima in angstroms, Coordination numbers in Angstroms'
         output['Coordination_Number']['explanation'] = 'This program finds the first three local minima and finds the coordination number integrating until there. Na-H20 represents the coordination number for water around sodium.'
-        pairlist = output['RDF'].keys()
+        pairlist = list(output['RDF'].keys())
         pairlist.remove('units')
         pairlist.remove('distance')
         r = output['RDF']['distance']

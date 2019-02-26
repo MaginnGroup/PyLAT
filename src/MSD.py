@@ -50,7 +50,7 @@ class MSD:
                 r2 = self.calcr2(comx, comy, comz, i, j)
                 MSD = self.MSDadd(r2, MSD, molcheck, i, j)
             if ver:
-                sys.stdout.write('\rMSD calculation {0}% complete'.format((i+1-skip)*100/num_init))
+                sys.stdout.write('\rMSD calculation {:.2f}% complete'.format((i+1-skip)*100.0/num_init))
         if ver:
             sys.stdout.write('\n')
         MSD = self.MSDnorm(MSD, num_init, nummol)

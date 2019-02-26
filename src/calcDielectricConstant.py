@@ -46,11 +46,11 @@ class calcDielectricConstant:
                 (Mx[count],My[count],Mz[count]) = self.calcdipolemoment(x, y, z, atomcharges)
                 count += 1
                 if ver > 1:
-                    sys.stdout.write('\rdipole moment calculation {0}% complete'.format(count*100/num_timesteps))
+                    sys.stdout.write('\rdipole moment calculation {:.2f}% complete'.format(count*100.0/num_timesteps))
         if ver > 1:
             sys.stdout.write('\n')
         if ver >= 1:
-            print 'calculating dielectric constant'
+            print('calculating dielectric constant')
         (AveM2, AveM) = self.calcaverage(Mx, My, Mz,start)
         dielectric = self.calcdielectric(AveM2, AveM, V, T)
         output['Dielectric Constant'] = {}
