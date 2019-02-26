@@ -59,8 +59,8 @@ class fitVisc:
             else:
                 cut += 1
         #cut = len(visc)
-        popt2,pcov2 = optimize.curve_fit(self.doubexp, time[start:cut], visc[start:cut],maxfev=1000000,p0=popt2, sigma=stddev[start:cut])
-        #popt2,pcov2 = optimize.curve_fit(self.doubexp, time[start:cut], visc[start:cut],maxfev=1000000,p0=popt2, sigma=stddev[start:cut],bounds=(0,[np.inf,1,np.inf,np.inf]))
+        #popt2,pcov2 = optimize.curve_fit(self.doubexp, time[start:cut], visc[start:cut],maxfev=1000000,p0=popt2, sigma=stddev[start:cut])
+        popt2,pcov2 = optimize.curve_fit(self.doubexp, time[start:cut], visc[start:cut],maxfev=1000000,p0=popt2, sigma=stddev[start:cut],bounds=(0,[np.inf,1,np.inf,np.inf]))
         
         fit = []
         fit1 = []
