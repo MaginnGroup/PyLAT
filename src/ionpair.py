@@ -154,6 +154,6 @@ class ionpair:
                     SSres += (correlation[l]-fit[l])**2
                 r2.append(1-SSres/SStot)
                 IPL.append(0)
-                for i in range(0,len(popt)/2):
-                    IPL[-1] += popt[i]*popt[i+len(popt)/2]
+                for i in range(0,int(len(popt)/2)):
+                    IPL[-1] += popt[i]*popt[i+int(len(popt)/2)]
         return (IPL,r2)
