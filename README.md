@@ -4,6 +4,10 @@ This is the github repository for the Python LAMMPS Analysis Tools.
 
 Some of the properties utilize Fortran for speedup. Before using this code, run either the shell script compile.sh or the python script compile.py
 
+## Requirements
+numpy>=1.14.1
+scipy>=1.0.0
+
 The following information can be accessed by running the command "python PyLAT.py -h"
 
 usage: PyLAT.py [-h] [-p PATH] [-i INPUT] [-f OUTPUT] [-g] [-c] [-m] [-d]
