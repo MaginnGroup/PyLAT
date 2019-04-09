@@ -6,6 +6,7 @@ Some of the properties utilize Fortran for speedup. Before using this code, run 
 
 ## Requirements
 numpy>=1.14.1
+
 scipy>=1.0.0
 
 The following information can be accessed by running the command "python PyLAT.py -h"
