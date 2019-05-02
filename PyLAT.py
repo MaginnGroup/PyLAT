@@ -30,6 +30,12 @@ if __name__ == '__main__':
     import sys
     import json
     
+    try:
+        import calccomf
+    except ImportError:
+        print("Please use either 'sh compile.sh' or 'python compile.py' to compile the fortran modules")
+        sys.exit(1)
+    
     #sys.path.append('~/Projects/Parser/publish/src')
     
     from src.MSD import MSD
@@ -333,7 +339,7 @@ if __name__ == '__main__':
     if arg.verbose >= 1:    
         print('beginning file generation')
     outputfile = open(arg.path + arg.output, 'w')
-    json.dump(output, outputfile, indent=4)
+    json.dump(output, outputfile, indent=4, sort_keys=True)
     outputfile.close()
     if arg.verbose >= 1:    
         print('file generated')
