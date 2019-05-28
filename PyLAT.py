@@ -31,7 +31,7 @@ if __name__ == '__main__':
     import json
     
     try:
-        import calccomf
+        import src.calccomf
     except ImportError:
         print("Please use either 'sh compile.sh' or 'python compile.py' to compile the fortran modules")
         sys.exit(1)
