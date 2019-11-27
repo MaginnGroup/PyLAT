@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import re
 import numpy as np
-from multiprocessing import Pool
+#from multiprocessing import Pool
 from scipy.integrate import cumtrapz
 
 def _list2float(seq):
@@ -141,8 +141,8 @@ class LammpsLog():
                     the viscosity in cP
         """
 
-        NCORES=1
-        p=Pool(NCORES)
+        #NCORES=1
+        #p=Pool(NCORES)
 
         numtimesteps = len(self.llog['pxy'])
         calcsteps = np.floor((numtimesteps-cutoff)/10000)*10000
@@ -154,7 +154,10 @@ class LammpsLog():
         a5=self.llog['pyy'][cutoff:]-self.llog['pzz'][cutoff:]
         a6=self.llog['pxx'][cutoff:]-self.llog['pzz'][cutoff:]
         array_array=[a1,a2,a3,a4,a5,a6]
-        pv=p.map(autocorrelate,array_array)
+        #pv=p.map(autocorrelate,array_array)
+        pv=np.zeros((6,len(a1)))
+        for i in range(0,6):
+            pv[i] = autocorrelate(array_array[i])
         pcorr = (pv[0]+pv[1]+pv[2])/6+(pv[3]+pv[4]+pv[5])/24
    	 
         temp=np.mean(self.llog['temp'][cutoff:])
