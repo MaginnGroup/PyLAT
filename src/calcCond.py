@@ -23,7 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import numpy as np
 from scipy.optimize import curve_fit
 from scipy.integrate import cumtrapz
-from getTimeData import gettimedata
+from .getTimeData import gettimedata
 import calccomf
 import copy
 import sys
