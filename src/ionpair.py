@@ -21,10 +21,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
-import calcdistances
+import src.calcdistances as calcdistances
 import numpy as np
 from scipy.integrate import cumtrapz
-import ipcorr
+import src.ipcorr as ipcorr
 from scipy.optimize import curve_fit
 import copy
 import sys

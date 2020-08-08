@@ -23,7 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import numpy as np
 import os
-import calccomf
+import src.calccomf as calccomf
 import sys
 
 

@@ -19,8 +19,8 @@ f2py.compile(f,modulename='calccomf',source_fn='calcCOM.f90',verbose=False)
 f = open('ipcorr.f90','r').read()
 f2py.compile(f,modulename='ipcorr',source_fn='ipcorr.f90',verbose=False)
 
-os.chdir('..')
+os.symlink(glob.glob('ipcorr.*.so')[0],'ipcorr.so')
+os.symlink(glob.glob('calcdistances.*.so')[0],'calcdistances.so')
+os.symlink(glob.glob('calccomf.*.so')[0],'calccomf.so')
 
-os.symlink(glob.glob('src/ipcorr.*.so')[0],'ipcorr.so')
-os.symlink(glob.glob('src/calcdistances.*.so')[0],'calcdistances.so')
-os.symlink(glob.glob('src/calccomf.*.so')[0],'calccomf.so')
+os.chdir('..')
