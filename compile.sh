@@ -5,3 +5,6 @@ python -m numpy.f2py -c -m ipcorr ipcorr.f90
 #f2py -c -m src/elradial src/elradial.f90
 #f2py -c -m src/siteradial src/siteradial.f90
 cd ..
+ln -s src/ipcorr.*.so ipcorr.so
+ln -s src/calcdistances.*.so calcdistances.so
+ln -s src/calccomf.*.so calccomf.so

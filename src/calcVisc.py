@@ -21,11 +21,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
-from viscio import LammpsLog
 import numpy as np
 import sys
 from random import randint
-from fitVisc import fitVisc
+
+from .fitVisc import fitVisc
+from .viscio import LammpsLog
 
 class calcVisc:
     
