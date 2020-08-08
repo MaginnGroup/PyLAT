@@ -25,7 +25,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import numpy as np
 import __future__
-import calccomf
+import src.calccomf as calccomf
 
 class distSearch:
     def distSearch(self, mol1, mol2, dist, deltaDist, firstFrame, numSamples, trjfilename, datfilename, moltype, moltypel,output):
