@@ -349,6 +349,6 @@ class calcCond:
         al = np.concatenate((a,np.zeros(len(a))),axis=0)
         bl = np.concatenate((b,np.zeros(len(b))),axis=0)
         c= np.fft.ifft(np.fft.fft(al)*np.conjugate(np.fft.fft(bl))).real
-        d = c[:len(c)/2]
+        d = c[:int(len(c)/2)]
         d/=(np.arange(len(d))+1)[::-1]
         return d
