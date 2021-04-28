@@ -104,22 +104,28 @@ class LammpsLog():
                 if format:
                     data_format = format.group().split()[2:]
 
-                if all(isinstance(x, float) for x in list(_list2float(line.split()))) and md == 1: break
+                if all(isinstance(x, float) for x in list(_list2float(line.split()))) and md == 1 and len(line)>=3: break
 
                 header += 1
+            #time.sleep(5)
 
             #note: we are starting from the "break" above
+            raw_data = []
             for line in logfile:
-                if line == '\n':
-                    footer_blank_line += 1
+                if all(isinstance(x, float) for x in list(_list2float(line.split()))) and len(line)>=3:
+                    raw_data.append(line.split())
+                else:
+                    break
+                #if line == '\n':
+                    #footer_blank_line += 1
             #print int(md_step/log_save_freq)
 
-            if total_lines >= header + md_step/log_save_freq:
-            	rawdata = np.genfromtxt(fname=filename,dtype=float,skip_header=header,skip_footer=int(total_lines-header-md_step/log_save_freq-1 )-footer_blank_line)
+            #if total_lines >= header + md_step/log_save_freq:
+            	#rawdata = np.genfromtxt(fname=filename,dtype=float,skip_header=header,skip_footer=int(total_lines-header-md_step/log_save_freq-1 )-footer_blank_line)
 
-            else:
-                rawdata = np.genfromtxt(fname=filename,dtype=float,skip_header=header,skip_footer=1)
-
+            #else:
+                #rawdata = np.genfromtxt(fname=filename,dtype=float,skip_header=header,skip_footer=1)
+            rawdata = np.array(raw_data,np.float)
             for column, property in enumerate(data_format):
                 llog[property] = rawdata[:, column]
 
